@@ -1,0 +1,42 @@
+.footer{
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    &-img{
+        background-image: url('../images/footer.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 500px;
+        width:100vw;
+    }
+    &-navigation{
+        background-color: #1b0d06;
+        display: flex;
+        flex-flow:row wrap;
+        justify-content: center;
+        flex:0 0 100%;
+        &__logo{
+            flex: 0 0 50%;
+            width:20vw;
+            svg{
+            }
+        }
+        &__icons{
+            flex:0 0 100%;
+            margin-bottom: 5vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            div{
+            width:30px;
+            height: fit-content;
+            svg{
+                width:100%;
+                height: auto;
+            }
+            }
+        }
+
+    }
+
+}

@@ -1,0 +1,37 @@
+{
+  "name": "ls",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://:@gitlab.ucode.world:8443/unit-factory-kyiv/frontend-ustore/szyatyugin.git"
+  },
+  "author": "Stanislav Zyatyugin",
+  "license": "ISC",
+  "devDependencies": {
+    "copy-webpack-plugin": "^6.1.0",
+    "css-loader": "^4.3.0",
+    "file-loader": "^6.1.0",
+    "html-webpack-plugin": "^4.4.1",
+    "mini-css-extract-plugin": "^0.11.2",
+    "postcss": "^7.0.32",
+    "postcss-loader": "^4.0.1",
+    "sass": "^1.26.10",
+    "sass-loader": "^10.0.2",
+    "ts-loader": "^8.0.3",
+    "typescript": "^4.0.2",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "autoprefixer": "^9.8.6",
+    "node-sass": "^4.14.1"
+  }
+}
