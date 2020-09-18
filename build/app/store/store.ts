@@ -1,14 +1,35 @@
 interface dataStorage {
     store: product[],
-    renderpage: any
-}
+    renderpage: number,
+    filterStatus:{
+    roastlevel:boolean,
+    pricelevel:boolean,
+    regionlevel:boolean,
+    countrylevel:boolean,
+    checked:boolean
 
+    }
+}
 class data implements dataStorage {
     store: product[];
-    renderpage: any=0;
+    renderpage: number;
+    filterStatus:{
+        roastlevel:boolean;
+        pricelevel:boolean;
+        regionlevel:boolean;
+        countrylevel:boolean;
+        checked:boolean;
+    }
     constructor() {
-        this.store = []
-        this.renderpage
+        this.store = [],
+        this.renderpage=0,
+    this.filterStatus={
+        roastlevel:false,
+        pricelevel:false,
+        regionlevel:false,
+        countrylevel:false,
+        checked:false,
+    }
     }
 
     saveToStore(elem: product): void {
@@ -27,6 +48,17 @@ class data implements dataStorage {
     renderNewPage(elem:number):number{
         return this.renderpage=elem
     }
+    changeFilterStatus(elem:string,status:boolean):void{
+        if(elem==='roastlevel'){
+            this.filterStatus.roastlevel=status
+        }else if(elem==='pricelevel'){
+            this.filterStatus.pricelevel=status
+        }else if(elem==='regionlevel'){
+            this.filterStatus.regionlevel=status
+        }else if(elem==='countrylevel'){
+            this.filterStatus.countrylevel=status
+        }
+    }
 
 }
 interface productFeatures {
@@ -37,7 +69,8 @@ interface productFeatures {
     description: string,
     characters: string[],
     quantity: number,
-    img: string
+    img: string,
+    show:boolean
 
 }
 class product implements productFeatures {
@@ -49,6 +82,7 @@ class product implements productFeatures {
     characters: string[];
     quantity: number;
     img: string;
+    show:boolean
     constructor(id: number, company: string, brand: string, price: number, description: string, characters: string[], quantity: number, img: string) {
         this.id = id,
             this.company = company,
@@ -57,7 +91,8 @@ class product implements productFeatures {
             this.description = description,
             this.characters = characters,
             this.quantity = quantity,
-            this.img = img
+            this.img = img,
+            this.show=true
     }
 }
 let id = (): number => {
@@ -85,7 +120,5 @@ let storage = new data();
 arrayOfProducts.forEach((element) => {
     storage.saveToStore(element)
 })
-
-
-
+console.log(storage)
 export default storage;
