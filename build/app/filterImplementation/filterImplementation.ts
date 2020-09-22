@@ -107,8 +107,11 @@ let filterImplementation = (): void => {
           } else {
             filterArrayElement.filterClicked = false;
           }
-        }else {
+        }else if(clickedElemClassName=='custom-checkbox') {
+        console.log('click custom-checkbox')
           console.log(e.target.value)
+          console.log(filterArrayElement)
+          console.log(e.currentTarget)
         }
     render()
     };

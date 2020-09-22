@@ -84,4 +84,4 @@ countryArray.map((elem)=>{
 })
 export {roastlevel,price,country,region,filterArray}
 let filterArray:createFilter[]=[roastlevel,price,country,region];
-
+console.log(filterArray)
