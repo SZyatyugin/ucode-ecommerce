@@ -1,37 +1,15 @@
-interface dataStorage {
+interface dataInterface {
     store: product[],
     renderpage: number,
-    filterStatus:{
-    roastlevel:boolean,
-    pricelevel:boolean,
-    regionlevel:boolean,
-    countrylevel:boolean,
-    checked:boolean
-
-    }
 }
-class data implements dataStorage {
+class data implements dataInterface {
     store: product[];
     renderpage: number;
-    filterStatus:{
-        roastlevel:boolean;
-        pricelevel:boolean;
-        regionlevel:boolean;
-        countrylevel:boolean;
-        checked:boolean;
-    }
+   
     constructor() {
         this.store = [],
-        this.renderpage=0,
-    this.filterStatus={
-        roastlevel:false,
-        pricelevel:false,
-        regionlevel:false,
-        countrylevel:false,
-        checked:false,
+        this.renderpage=0
     }
-    }
-
     saveToStore(elem: product): void {
         this.store.push(elem);
     }
@@ -49,19 +27,12 @@ class data implements dataStorage {
         return this.renderpage=elem
     }
     changeFilterStatus(elem:string,status:boolean):void{
-        if(elem==='roastlevel'){
-            this.filterStatus.roastlevel=status
-        }else if(elem==='pricelevel'){
-            this.filterStatus.pricelevel=status
-        }else if(elem==='regionlevel'){
-            this.filterStatus.regionlevel=status
-        }else if(elem==='countrylevel'){
-            this.filterStatus.countrylevel=status
-        }
+       let filterElem:any=`this.filterStatus.${elem}`;
+filterElem=status;
     }
 
 }
-interface productFeatures {
+interface productInterface {
     id: number,
     company: string,
     brand: string,
@@ -71,9 +42,8 @@ interface productFeatures {
     quantity: number,
     img: string,
     show:boolean
-
 }
-class product implements productFeatures {
+class product implements productInterface {
     id: number;
     company: string;
     brand: string;
@@ -95,6 +65,7 @@ class product implements productFeatures {
             this.show=true
     }
 }
+
 let id = (): number => {
     return Number(new Array(4).fill(null).map((elem) => {
         return elem = Math.floor(Math.random() * 10)
