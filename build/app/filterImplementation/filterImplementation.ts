@@ -7,7 +7,7 @@ import {
   region,
   filterArray,
 } from "../store/filter-store";
-import mainFilterRender from "../filterRender/mainFilterRender";
+
 
 let filterImplementation = (): void => {
   let get = (id: string): Element => {
@@ -18,6 +18,7 @@ let filterImplementation = (): void => {
   };
 
   get(".selected-quantity").innerHTML = `${storage.store.length}`;
+  get('.selected-quantity').innerHTML=`${storage.store.length}`
   get("#sort-assortment").addEventListener("change", sortSelectionCheck);
 
   function sortSelectionCheck(e: any): void {
@@ -33,7 +34,7 @@ let filterImplementation = (): void => {
     render();
   }
 
-  Object.values(getAll(".page")).forEach((elem: Element) => {
+  Object.values(getAll(".section-assortment__pages-counter")).forEach((elem: Element) => {
     elem.addEventListener("click", changepage);
   });
   function changepage(e: any) {
@@ -70,9 +71,7 @@ let filterImplementation = (): void => {
   
   function showfilterelem(e: any) {
     //----show or hide elements in the filter----//
-  
-  console.log(e)
-  
+
       let clickedElemClassName: any = Object.values(e.target.classList).find(
         (elemClicked: Element) => {
           return filterArray.map((filterArrayElem: any) => {
@@ -108,41 +107,84 @@ let filterImplementation = (): void => {
             filterArrayElement.filterClicked = false;
           }
         }else if(clickedElemClassName=='custom-checkbox') {
-        console.log('click custom-checkbox')
-          console.log(e.target.value)
-          console.log(filterArrayElement)
-          console.log(e.currentTarget)
+        
+        //--- clicked main filter(an object with features, contains innerFilter elements) ---//
+          let clickedMainFilterElem:any=filterArray.find((filterElem:any)=>{
+            return filterElem.innerFilter.find((innerFilterElem:any)=>{
+              if(e.target.value.toLowerCase()==innerFilterElem.innerFilterName.toLowerCase())
+              return innerFilterElem
+            })
+          });
+          //--- clicked inner filter element (an object with features)---//
+          let clickedInnerFilterElem=clickedMainFilterElem.innerFilter.find((innerElem:any)=>{
+            if(e.target.value.toLowerCase()==innerElem.innerFilterName.toLowerCase()){
+              return innerElem
+            }
+          });
+          
+          
+          if(!clickedInnerFilterElem.innerFilterStatus){
+            clickedInnerFilterElem.innerFilterStatus=true;
+             //---an array of clicked inner filter elements---//
+            let arrayOfClickedInnerFilterElem:any=filterArray.map((elem)=>{
+              return elem.innerFilter.filter((elem)=>{
+                if(elem.innerFilterStatus)
+                return elem
+              })
+             })
+             console.log(arrayOfClickedInnerFilterElem)
+              storage.showAll=false;
+              console.log('for first time')
+              storage.store.map((elem)=>{
+                elem.characters.map((charactersElem)=>{
+                  if(charactersElem.toLowerCase()==clickedInnerFilterElem.innerFilterName.toLowerCase()){
+                    return elem.show=true
+                  }
+                })
+              })
+            }else{
+              
+            clickedInnerFilterElem.innerFilterStatus=false;
+            let arrayOfClickedInnerFilterElem:any=filterArray.map((elem)=>{
+              return elem.innerFilter.filter((elem)=>{
+                if(elem.innerFilterStatus)
+                return elem
+              })
+             })
+             storage.store.map((elem)=>{
+               elem.show=false;
+             })
+             arrayOfClickedInnerFilterElem.map((elem:any)=>{
+               elem.map((innerElem:any)=>{
+                 storage.store.map((elemStorage:any)=>{
+                   elemStorage.characters.map((charactersElem:any)=>{
+                     if(charactersElem.toLowerCase()==innerElem.innerFilterName.toLowerCase()){
+                      elemStorage.show=true
+                     }
+                   })
+                 })
+               })
+             })
+             //---an array of filtered goods,according to inner filters---//
+          let filteredElemOfStorage:any=storage.store.filter((elem)=>{
+            if(elem.show)
+            return elem
+          })  
+            if(filteredElemOfStorage.length==0){
+              storage.showAll=true
+            }
+          }
+          let totalQuantityOfGoods:any=storage.store.filter((elem)=>{
+            if(elem.show)
+            return elem
+          })
+          get('.selected-quantity').innerHTML=`${totalQuantityOfGoods.length}`
+          if(storage.showAll){
+            get('.selected-quantity').innerHTML=`${storage.store.length}`
+          }
         }
     render()
     };
   
-Object.values(getAll(".custom-checkbox")).forEach((elem: Element) => {
-    elem.addEventListener("change", sortProductsByFilter);
-  });
-  function sortProductsByFilter(e: any) {
-      console.log(e.target.value)
-    if (e.target.classList.contains("checked")) {
-      console.log(1);
-      e.target.classList.remove("checked");
-      storage.store.map((elem) => {
-        elem.characters.map((charactersElem) => {
-          if (e.target.value == charactersElem) return (elem.show = false);
-        });
-      });
-      e.preventDefault();
-      return false;
-    } else {
-      console.log(2);
-      e.target.classList.add("checked");
-      storage.store.map((elem) => {
-        return (elem.show = false);
-      });
-      storage.store.map((elem) => {
-        elem.characters.map((charactersElem) => {
-          if (e.target.value == charactersElem) return (elem.show = true);
-        });
-      });
-    }
-  }
 };
 filterImplementation();

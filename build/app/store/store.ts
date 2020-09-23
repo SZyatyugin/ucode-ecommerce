@@ -1,14 +1,17 @@
 interface dataInterface {
     store: product[],
     renderpage: number,
+    showAll:boolean
 }
 class data implements dataInterface {
     store: product[];
     renderpage: number;
+    showAll:boolean
    
     constructor() {
         this.store = [],
-        this.renderpage=0
+        this.renderpage=0,
+        this.showAll=true
     }
     saveToStore(elem: product): void {
         this.store.push(elem);
@@ -62,7 +65,7 @@ class product implements productInterface {
             this.characters = characters,
             this.quantity = quantity,
             this.img = img,
-            this.show=true
+            this.show=false
     }
 }
 
@@ -86,10 +89,13 @@ let arrayOfProducts: product[] = [
     new product(id(), 'Broadsheet', 'Laayyoo', 25.90, "Traditional notes of blueberry mingle with a watermelon sweetness and green apple acidity. So fresh and so clean, this one puts a big ol' smile on our faces.", ['light', "South America", "Columbia", "more than $22"], 2, "../build/assets/images/broadsheet.jpeg"),
     new product(id(), 'Greater Goods', 'Rise and Shine', 17.35, 'Dark and bold and super sweet, with noticeable notes of dark chocolate. This is the kind of cup that starts off a very good day.', ['medium-dark', '$15-$18', 'Central America'], 10, "../build/assets/images/coffee-co.jpeg"),
     new product(id(), 'Equator', 'Peru Cajamarca Fair Trade Organic', 20.00, 'This big-bodied Peruvian cup boasts a buttery mouthfeel, notes of dried cherry, and a milk chocolaty sweetness.', ['$18-$22', 'Central America', 'medium'], 12, "../build/assets/images/equator-coffees.jpeg"),
+    new product(id(),'Red Rooster','Farmhouse Breakfast Blend',14.00,'Caramel sweetness stars in this tremendously drinkable blend, brightened by a meyer lemon acidity and a nutty-sweet finish.',['Less than $15','Africa','dark'],10,"../build/assets/images/Floyd-Farmhouse.jpeg"),
+    new product(id(),'Red Rooster','Waxwing',13.00,'Earthy depth meets a juicy berry sweetness in a rich, chocolaty body - this blend is ready to be the wind beneath your wings.',['Ecuador','Less than $15','South America','medium'],5,"../build/assets/images/red-rooster.jpeg"),
+    new product(id(),'Red Rooster','Funky Chicken',12.00,"Don't be surprised if you flap your arms and your feet start kickin' - this balanced blend brings together an earthy sweetness with a bright plum acidity.",['Less than $15','Asia','dark'],4,"../build/assets/images/red-rooster-funky-chicken.jpeg")
 ]
 let storage = new data();
 arrayOfProducts.forEach((element) => {
     storage.saveToStore(element)
 })
-console.log(storage)
+
 export default storage;

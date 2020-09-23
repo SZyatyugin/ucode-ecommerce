@@ -25,6 +25,8 @@
 
         img {
           width: 100%;
+          transition: transform 0.5s ease-out;
+          cursor: pointer;
         }
 
         img:hover {
@@ -265,7 +267,8 @@ font-family: 'Montserrat-Regular';
           background-repeat: no-repeat;
         }
 
-        .custom-checkbox:checked + label::before {
+        .custom-checkbox.checked + label::before {
+          //--- change the state of inner filter on click event ---//
           background-image: url("../images/tick.svg");
         }
       }
@@ -349,8 +352,14 @@ font-family: 'Montserrat-Regular';
 
         .card-img{
           flex:0 0 100%;
+          overflow: hidden;
           img{
             width:100%;
+            transition: transform 1s ease;
+            cursor: pointer;
+          }
+          img:hover{
+            transform: translateY(-10%);
           }
         }
         .card-companyname{

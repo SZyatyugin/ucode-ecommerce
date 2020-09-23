@@ -21,7 +21,6 @@ interface filterInterface{
         createInnerFilter(elem:createInnerFilter){
 this.innerFilter.push(elem);
         }
-    
     }
 
     interface innerFilterInterface{
@@ -33,6 +32,7 @@ this.innerFilter.push(elem);
         innerFilterName:string;
         innerFilterId:string;
         innerFilterStatus:boolean;
+        
         constructor(innerFilterName:string,innerFilterId:string,innerFilterStatus:boolean){
 this.innerFilterName=innerFilterName;
 this.innerFilterId=innerFilterId;
@@ -84,4 +84,4 @@ countryArray.map((elem)=>{
 })
 export {roastlevel,price,country,region,filterArray}
 let filterArray:createFilter[]=[roastlevel,price,country,region];
-console.log(filterArray)
+

@@ -2,17 +2,33 @@ import storage from '../store/store';
 
 
 let createStoreElem=():string=>{
+    
     let get=(id:string):Element=>{
         return document.querySelector(id)
     }
-    let pagescounter:number[]=new Array(Math.ceil(storage.store.length/6)).fill(null).map((elem:any,index)=>{return elem=index+1});
+
+    if(storage.renderpage===0){
+        storage.renderNewPage(1);
+    }
+    let filteredStoreElems:any=storage.store.filter((elem)=>{
+        if(elem.show)
+        return elem
+    })
+    let pagescounter:number[];
+    let store:any;
+    console.log(filteredStoreElems)
+    if(filteredStoreElems.length==0){
+        store=storage.store;
+    pagescounter=new Array(Math.ceil(storage.store.length/6)).fill(null).map((elem:any,index)=>{return elem=index+1});
+    }
+   else{
+    store=filteredStoreElems;
+    pagescounter=new Array(Math.ceil(filteredStoreElems.length/6)).fill(null).map((elem:any,index)=>{return elem=index+1});
+   }
     let pages:string=pagescounter.map((elem)=>{
         return `<div class='page p-${elem}'>${elem}</div>`
     }).join('');
     get('.section-assortment__pages-counter').innerHTML=pages;
-    if(storage.renderpage===0){
-        storage.renderNewPage(1);
-    }
     let lastElemeToRender:number=storage.renderpage*6-1;
     let firstElemToRender:number=lastElemeToRender-5;
     if(lastElemeToRender>storage.store.length){
@@ -22,8 +38,11 @@ let createStoreElem=():string=>{
     if(firstElemToRender<0){
         firstElemToRender=0
     }
-let elem:string=storage.store.map((elem:any,index:number)=>{
-    if(index>=firstElemToRender && index<=lastElemeToRender && elem.show){
+    
+  
+
+let elem:string=store.map((elem:any,index:number)=>{
+    if(index>=firstElemToRender && index<=lastElemeToRender && (elem.show||storage.showAll)){
         return `
         <div class='section-assortment__goods-card card-${index}'>
         <div class='card-img'>
@@ -38,7 +57,7 @@ let elem:string=storage.store.map((elem:any,index:number)=>{
         <div class='card-description'>${elem.description}</div>
         <div class='card-price'>The Price is: $${elem.price}</div>
         <div class='card-quantityInStore'>Available in store: ${elem.quantity}</div>
-        <input type='button' value="Add to Card" class='card-button'>
+        <input type='button' value="ADD TO CART" class='card-button'>
         </div>
         `  
     }  
