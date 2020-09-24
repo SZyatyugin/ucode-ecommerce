@@ -42,9 +42,11 @@ interface productInterface {
     price: number,
     description: string,
     characters: string[],
-    quantity: number,
+    inStore: number,
+    quantity:number;
     img: string,
-    show:boolean
+    show:boolean,
+    addToCart:boolean,
 }
 class product implements productInterface {
     id: number;
@@ -54,8 +56,10 @@ class product implements productInterface {
     description: string;
     characters: string[];
     quantity: number;
+    inStore:number;
     img: string;
-    show:boolean
+    show:boolean;
+    addToCart:boolean;
     constructor(id: number, company: string, brand: string, price: number, description: string, characters: string[], quantity: number, img: string) {
         this.id = id,
             this.company = company,
@@ -64,11 +68,17 @@ class product implements productInterface {
             this.description = description,
             this.characters = characters,
             this.quantity = quantity,
+            this.inStore=quantity,
+            this.quantity=quantity,
             this.img = img,
-            this.show=false
+            this.show=false,
+            this.addToCart=false
     }
 }
-
+let cartStorage={
+    smallcartStatus:false,
+    maincartStatus:false
+}
 let id = (): number => {
     return Number(new Array(4).fill(null).map((elem) => {
         return elem = Math.floor(Math.random() * 10)
@@ -97,5 +107,4 @@ let storage = new data();
 arrayOfProducts.forEach((element) => {
     storage.saveToStore(element)
 })
-
-export default storage;
+export {storage,cartStorage};

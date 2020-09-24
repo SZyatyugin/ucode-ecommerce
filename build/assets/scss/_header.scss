@@ -90,7 +90,7 @@ body {
       justify-content: flex-end;
       overflow: hidden;
       padding-right: 5vw;
-      * {
+      svg {
         width: 30px;
         height: 30px;
         padding:0 0.8em
@@ -121,6 +121,11 @@ body {
       }
 
       &-cart {
+        svg:hover+.cart>.cart-small{
+          position: absolute;
+          display:flex;
+          color:black;
+        }
       }
     }
   }

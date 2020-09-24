@@ -1,0 +1,128 @@
+//---small cart---//
+.cart {
+  font-family: "Montserrat-Thin";
+  color:black;
+  &-small {
+      display: none;
+    width: 30vw;
+    position: fixed;
+    border: 1px solid black;
+    background-color: white;
+    z-index: 10;
+    right: 0;
+    
+    flex-flow: row wrap;
+    justify-content: center;
+    &.active{
+        display: flex;
+        top:0;
+    }
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      flex: 0 0 80%;
+      border-bottom: 1px solid lightgrey;
+      line-height: 2em;
+      .cart-small__header-close {
+        cursor: pointer;
+      }
+    }
+    &__product-info {
+      flex: 0 0 80%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      .empty-cart {
+        padding: 30px 0;
+      }
+      .product-image {
+        flex: 0 0 25%;
+        img {
+          width: 100%;
+        }
+      }
+      .product-quantity {
+        flex: 0 0 20%;
+      }
+    }
+    &__button-view-cart {
+      flex: 0 0 80%;
+      input {
+        font-family: "Montserrat-Medium";
+        width: 100%;
+        background-color: white;
+        border: 1px solid lightgray;
+        cursor: pointer;
+        padding: 5px 0;
+      }
+    }
+    &__button-continue-shopping {
+      flex: 0 0 80%;
+      display: flex;
+      justify-content: center;
+      div {
+        padding: 20px 0;
+        cursor: pointer;
+      }
+    }
+  }
+  .cart-main{
+    display: none;
+    position: fixed;
+    top:40vh;
+    left:20vw;
+    z-index:10;
+    background-color: white;
+    width:max(50vw,320px);
+    height: auto;
+    justify-content: center;
+    flex-flow: row wrap;
+    &.active{
+      display:flex;
+    }
+    .cart-main__products-img{
+      width:7vw;
+        img{
+          width:100%;
+        };
+    }
+    &__close{
+      flex:0 0 100%;
+      text-align: right;
+      font-size: 2em;
+      display: flex;
+      height: fit-content;
+      justify-content: flex-end;
+      align-items: baseline;
+      
+      div{
+        padding: 1em 1.5em 0 0;
+      }
+    }
+    &__info{
+      flex:0 0 100%;
+      display: flex;
+      flex-flow:row wrap;
+      justify-content: center;
+      align-self: flex-start;
+      margin-top:-5vh;
+      div:first-child{
+        flex:0 0 100%;
+        text-align: center;
+        font-weight: bold;
+        font-size: 2em;
+      }
+    }
+    &__products{
+      flex:0 0 100%;
+      display: flex;
+      justify-content: center;
+    }
+    &__subtotal{
+      display: flex;
+      flex:0 0 60%;
+      justify-content: flex-end;
+    }
+  }
+
+}

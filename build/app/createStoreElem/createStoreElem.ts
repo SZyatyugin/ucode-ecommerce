@@ -1,4 +1,4 @@
-import storage from '../store/store';
+import {storage} from '../store/store';
 
 
 let createStoreElem=():string=>{
@@ -56,8 +56,8 @@ let elem:string=store.map((elem:any,index:number)=>{
         </div>
         <div class='card-description'>${elem.description}</div>
         <div class='card-price'>The Price is: $${elem.price}</div>
-        <div class='card-quantityInStore'>Available in store: ${elem.quantity}</div>
-        <input type='button' value="ADD TO CART" class='card-button'>
+        <div class='card-quantityInStore'>Available in store: ${elem.inStore}</div>
+        <input type='button' value="${elem.inStore!=0?'ADD TO CART':'SOLD OUT!'}" class='card-button ${elem.id}' ${elem.inStore!=0?"":'disabled'}>
         </div>
         `  
     }  

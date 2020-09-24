@@ -1,4 +1,4 @@
-import storage from "../store/store";
+import {storage} from "../store/store";
 import render from "../main";
 import {
   roastlevel,
