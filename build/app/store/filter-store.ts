@@ -2,20 +2,17 @@ interface filterInterface{
     filterName:string;
     filterClassName:string;
     filterStatus:boolean;
-    filterClicked:boolean;
     innerFilter:createInnerFilter[]
     }
     class createFilter implements filterInterface{
         filterName:string;
         filterClassName:string;
         filterStatus:boolean;
-        filterClicked:boolean;
         innerFilter:createInnerFilter[];
         constructor(filterName:string,filterClassName:string,filterStatus:boolean,filterClicked:boolean){
             this.filterName=filterName;
             this.filterClassName=filterClassName;
             this.filterStatus=filterStatus;
-            this.filterClicked=filterClicked;
             this.innerFilter=[];
         };
         createInnerFilter(elem:createInnerFilter){
@@ -84,4 +81,4 @@ countryArray.map((elem)=>{
 })
 export {roastlevel,price,country,region,filterArray}
 let filterArray:createFilter[]=[roastlevel,price,country,region];
-console.log(filterArray)
+

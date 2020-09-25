@@ -16,7 +16,7 @@ let createStoreElem=():string=>{
     })
     let pagescounter:number[];
     let store:any;
-    console.log(filteredStoreElems)
+    
     if(filteredStoreElems.length==0){
         store=storage.store;
     pagescounter=new Array(Math.ceil(storage.store.length/6)).fill(null).map((elem:any,index)=>{return elem=index+1});
@@ -39,8 +39,6 @@ let createStoreElem=():string=>{
         firstElemToRender=0
     }
     
-  
-
 let elem:string=store.map((elem:any,index:number)=>{
     if(index>=firstElemToRender && index<=lastElemeToRender && (elem.show||storage.showAll)){
         return `

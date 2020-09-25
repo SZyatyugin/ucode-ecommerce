@@ -29,11 +29,6 @@ class data implements dataInterface {
     renderNewPage(elem:number):number{
         return this.renderpage=elem
     }
-    changeFilterStatus(elem:string,status:boolean):void{
-       let filterElem:any=`this.filterStatus.${elem}`;
-filterElem=status;
-    }
-
 }
 interface productInterface {
     id: number,
@@ -44,9 +39,11 @@ interface productInterface {
     characters: string[],
     inStore: number,
     quantity:number;
+    inCart:number;
     img: string,
     show:boolean,
     addToCart:boolean,
+    changeQuantity:boolean
 }
 class product implements productInterface {
     id: number;
@@ -56,10 +53,12 @@ class product implements productInterface {
     description: string;
     characters: string[];
     quantity: number;
+    inCart:number;
     inStore:number;
     img: string;
     show:boolean;
     addToCart:boolean;
+    changeQuantity:boolean;
     constructor(id: number, company: string, brand: string, price: number, description: string, characters: string[], quantity: number, img: string) {
         this.id = id,
             this.company = company,
@@ -69,15 +68,17 @@ class product implements productInterface {
             this.characters = characters,
             this.quantity = quantity,
             this.inStore=quantity,
-            this.quantity=quantity,
+            this.inCart=0;
             this.img = img,
             this.show=false,
-            this.addToCart=false
+            this.addToCart=false,
+            this.changeQuantity=false
     }
 }
 let cartStorage={
     smallcartStatus:false,
-    maincartStatus:false
+    maincartStatus:false,
+    totalSum:0,
 }
 let id = (): number => {
     return Number(new Array(4).fill(null).map((elem) => {

@@ -121,6 +121,21 @@ body {
       }
 
       &-cart {
+        position: relative;
+        .cart-icon-total-quantity.show{
+          position: absolute;
+          display: block;
+          left: 2em;
+          bottom:1em;
+          border-radius: 50px;
+          border:1px solid #33221b;
+          width:1em;
+          height:1em;
+          text-align: center;
+          background-color: white;
+          color:#33221b;
+
+        }
         svg:hover+.cart>.cart-small{
           position: absolute;
           display:flex;
