@@ -85,9 +85,13 @@ let filterImplementation = (): void => {
   //----show or hide elements in the filter----//
 
   function showfilterelem(e: any) {
-    if (!e.target.classList.contains('custom-checkbox') && e.target.tagName != "LABEL") {
+    if(e.target.nodeName=='LABEL'){
+      return false
+    }
+    if (!e.target.classList.contains('custom-checkbox')) {
       let filterArrayElement: any = filterArray.find((elem: any) => {
-        return Object.values(e.target.classList).find((targetElem) => {
+        
+        return Object.values(e.target.classList).find((targetElem: any) => {
           if (targetElem == elem.filterClassName)
             return elem
         })
@@ -97,74 +101,121 @@ let filterImplementation = (): void => {
       } else {
         filterArrayElement.filterStatus = false;
       }
-    } else {
+    } else{
+      
+console.log('innerfilter')
 
       //--- clicked main filter(an object with features, contains innerFilter elements) ---//
       let clickedMainFilterElem: any = filterArray.find((filterElem: any) => {
         return filterElem.innerFilter.find((innerFilterElem: any) => {
-          if (e.target.nodeName != "LABEL" && e.target.value.toLowerCase() == innerFilterElem.innerFilterName.toLowerCase())
+          if (e.target.value.toLowerCase() == innerFilterElem.innerFilterName.toLowerCase())
             return innerFilterElem
         })
       });
       //--- clicked inner filter element (an object with features)---//
       let clickedInnerFilterElem = clickedMainFilterElem.innerFilter.find((innerElem: any) => {
-        if (e.target.nodeName != "LABEL" && e.target.value.toLowerCase() == innerElem.innerFilterName.toLowerCase()) {
+        if (e.target.value.toLowerCase() == innerElem.innerFilterName.toLowerCase()) {
           return innerElem
         }
       });
+    
       if (!clickedInnerFilterElem.innerFilterStatus) {
         //---click inner filter=true---//
         clickedInnerFilterElem.innerFilterStatus = true;
         storage.showAll = false;
-        storage.store.map((elem) => {
-          elem.characters.map((charactersElem) => {
-            if (charactersElem.toLowerCase() == clickedInnerFilterElem.innerFilterName.toLowerCase()) {
-              return elem.show = true
-            }
-          })
-        })
-      } else {
-        //---click inner filter=false---//
-        let arrayOfFilteredProducts: any = storage.store.filter((elem: any) => {
-          if (elem.show)
-            return elem
-        })
-        
-        clickedInnerFilterElem.innerFilterStatus = false;
+        //---an array of clicked inner filters ---//
         let arrayOfClickedInnerFilterElem: any = filterArray.map((elem) => {
           return elem.innerFilter.filter((elem) => {
             if (elem.innerFilterStatus)
               return elem
           })
+        }).filter((elem)=>{if(elem.length!=0) return elem});
+         //---an array of filtered products---//
+        let arrayOfFilteredProducts: any = storage.store.filter((elem: any) => {
+          if (elem.show)
+            return elem
         })
+if(arrayOfClickedInnerFilterElem.length==1){
+  console.log('one filter turned')
+  //--if only one filter turned on, takes storage as basis ---//
+  storage.store.map((elem) => {
+    elem.characters.map((charactersElem) => {
+      if (charactersElem.toLowerCase() == clickedInnerFilterElem.innerFilterName.toLowerCase()) {
+        return elem.show = true
+      }
+    })
+  })
+}else{
+  console.log('several filters turned');
+  console.log(arrayOfClickedInnerFilterElem);
+  console.log(arrayOfFilteredProducts);
+  console.log(clickedInnerFilterElem)
+  //--if more than one main filter turned on, takes arrayOfCllickedFilterElem as basis ---//
+      arrayOfFilteredProducts.map((elemProducts:any)=>{
+        elemProducts.characters.map((elemcharacters:any)=>{
+          if(elemcharacters.toLowerCase()==clickedInnerFilterElem.innerFilterName.toLowerCase()){
+            console.log(clickedInnerFilterElem.innerFilterName.toLowerCase())
+            return elemProducts.show=true
+          }else{
+            console.log(2)
+            return elemProducts.show=false
+          }
+        })
+      })
+    
+
+}
+        console.log(arrayOfClickedInnerFilterElem)
+        console.log(arrayOfFilteredProducts)
+        
+      } else {
+        console.log('turn off filter')
+        //---click inner filter=false---//
+        //---an array of filtered products---//
+        let arrayOfFiltProducts: any = storage.store.filter((elem: any) => {
+          if (elem.show)
+            return elem
+        })
+        console.log(arrayOfFiltProducts)
+        clickedInnerFilterElem.innerFilterStatus = false;
+        //---an array of clicked inner filters---//
+        let arrayOfClickedInnerFilterElem: any = filterArray.map((elem) => {
+          return elem.innerFilter.filter((elem) => {
+            if (elem.innerFilterStatus)
+              return elem
+          })
+        }).filter((elem)=>{if(elem.length!=0) return elem})
         storage.store.map((elem) => {
           elem.show = false;
         })
-        if(arrayOfClickedInnerFilterElem.length==0){
-          arrayOfClickedInnerFilterElem.map((elem: any) => {
-            elem.map((innerElem: any) => {
-              storage.store.map((elemStorage: any) => {
-                elemStorage.characters.map((charactersElem: any) => {
-                  if (charactersElem.toLowerCase() == innerElem.innerFilterName.toLowerCase()) {
-                    elemStorage.show = true
+        if (arrayOfFiltProducts.length == 0) {
+          console.log(arrayOfFiltProducts)
+          //---all filters turned off---//
+          storage.store.map((elem) => {
+            if (!elem.show)
+              elem.show = true
+          })
+        } else {
+          console.log('try to turn off');
+          
+          //---if several filters turned on and one of the is turned off--//
+          console.log(arrayOfClickedInnerFilterElem)
+          console.log(arrayOfFiltProducts);
+          console.log(clickedInnerFilterElem);
+          arrayOfFiltProducts.map((elem: any) => {
+            arrayOfClickedInnerFilterElem.map((elemFilter: any) => {
+              elemFilter.map((innerFilter:any)=>{
+                elem.characters.map((charactersElem: any) => {
+                  if (charactersElem.toLowerCase() == innerFilter.innerFilterName.toLowerCase()) {
+                   return elem.show = true
                   }
                 })
               })
-            })
-          })
-        }else{
-          console.log(arrayOfClickedInnerFilterElem);
-          console.log(arrayOfFilteredProducts)
-          arrayOfFilteredProducts.map((elem:any)=>{
-            arrayOfClickedInnerFilterElem.map((elemFilter:any)=>{
-              elem.characters.map((charactersElem:any)=>{
-                if(charactersElem.toLowerCase()==elemFilter.innerFilterName.toLowerCase()){
-                  elem.show=true
-                }
-              })
+              
             })
           })
         }
+        console.log(arrayOfClickedInnerFilterElem);
         //---an array of filtered goods,according to inner filters---//
         let filteredElemOfStorage: any = storage.store.filter((elem) => {
           if (elem.show)

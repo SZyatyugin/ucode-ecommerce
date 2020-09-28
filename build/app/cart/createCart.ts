@@ -19,6 +19,9 @@ let createCart = ():string => {
     if(arrayAddElemToCart.length!=0){
         get('.cart-icon-total-quantity').innerHTML=arrayAddElemToCart.length;
         get('.cart-icon-total-quantity').classList.add('show');
+    }else{
+        get('.cart-icon-total-quantity').classList.remove('show');
+        get('.cart-icon-total-quantity').innerHTML='';
     }
     
         let cart:string=`

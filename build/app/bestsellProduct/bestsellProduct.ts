@@ -2,7 +2,11 @@ import {storage} from '../store/store';
 
 
 let createBestSellProduct=():string=>{
+    
     let randomCardIndex:number=Math.floor(Math.random()*storage.store.length-1);
+    if(randomCardIndex==-1){
+        randomCardIndex=0
+    }
     let randomCard=storage.store.find((elem:any,index:any)=>{
         if(index==randomCardIndex)
         return elem
@@ -116,6 +120,7 @@ let createBestSellProduct=():string=>{
                     </div>
                 </div>
     `
-    return bestSellCard
+   return bestSellCard
 }
+
 export default createBestSellProduct

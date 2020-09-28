@@ -136,10 +136,9 @@ body {
           color:#33221b;
 
         }
-        svg:hover+.cart>.cart-small{
+        .show-main-cart:hover+.cart>.cart-small{
           position: absolute;
           display:flex;
-          color:black;
         }
       }
     }
