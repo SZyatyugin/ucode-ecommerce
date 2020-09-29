@@ -63,7 +63,7 @@ this.innerFilterStatus=innerFilterStatus;
     ];
     let countryArray:createInnerFilter[]=[
         new createInnerFilter('Brazil','brazil',false),
-        new createInnerFilter('Colombia','colombia',false),
+        new createInnerFilter('Columbia','columbia',false),
         new createInnerFilter('Costa Rica','costa-rica',false),
         new createInnerFilter('Ecuador','ecuador',false)
     ]
