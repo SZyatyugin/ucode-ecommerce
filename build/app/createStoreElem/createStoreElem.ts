@@ -17,14 +17,16 @@ let createStoreElem=():string=>{
     let pagescounter:number[];
     let store:any;
     
-    if(filteredStoreElems.length==0){
-        store=storage.store;
-    pagescounter=new Array(Math.ceil(storage.store.length/6)).fill(null).map((elem:any,index)=>{return elem=index+1});
-    }
-   else{
-    store=filteredStoreElems;
-    pagescounter=new Array(Math.ceil(filteredStoreElems.length/6)).fill(null).map((elem:any,index)=>{return elem=index+1});
-   }
+        if(filteredStoreElems.length==0){
+            store=storage.store;
+        pagescounter=new Array(Math.ceil(storage.store.length/6)).fill(null).map((elem:any,index)=>{return elem=index+1});
+        }
+       else{
+        store=filteredStoreElems;
+        pagescounter=new Array(Math.ceil(filteredStoreElems.length/6)).fill(null).map((elem:any,index)=>{return elem=index+1});
+       }
+    
+    
     let pages:string=pagescounter.map((elem)=>{
         return `<div class='page p-${elem}'>${elem}</div>`
     }).join('');

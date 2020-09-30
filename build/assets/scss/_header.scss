@@ -4,16 +4,28 @@ body {
 }
 
 .header {
+  .header-navigation__menu-button{
+    display: none;
+    height: 2.5em;
+    width: 2.5em;
+    svg{
+      width:100%;
+      height: auto;
+      fill:white;
+    }
+  }
+  
   .header-navigation {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    align-items: center;
+    
     background-color: #33211b;
     color: white;
+    .header-navigation__wrapper{
+      display: flex;
+      flex-flow:row wrap;
+    }
     &__logo {
         /*styles for logo*/
-      margin: 40px 0;
+      margin: 2em 0em 2em 2em;
       flex: 0 0 20%;
       overflow: hidden;
       svg{
@@ -88,6 +100,8 @@ body {
       display: flex;
       flex: 1 0 15%;
       justify-content: flex-end;
+      flex-flow: row;
+      align-items: center;
       overflow: hidden;
       padding-right: 5vw;
       svg {
@@ -136,14 +150,12 @@ body {
           color:#33221b;
 
         }
-        .show-main-cart:hover+.cart>.cart-small{
-          position: absolute;
-          display:flex;
-        }
       }
     }
   }
-
+  .cart-small.active{
+    display:flex;
+  }
   &__advertisement {
     background-color: #c57e49;
     display: flex;

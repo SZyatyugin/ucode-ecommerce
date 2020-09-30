@@ -2,13 +2,11 @@
     display: flex;
     justify-content: center;
     flex-flow: row wrap;
-    &-img{
-        background-image: url('../images/footer.png');
-        background-size: cover;
-        background-repeat: no-repeat;
-        height: 500px;
-        width:100vw;
-    }
+        img{
+            width:100vw;
+            height: auto;
+        }
+    
     &-navigation{
         background-color: #1b0d06;
         display: flex;
@@ -23,6 +21,7 @@
         }
         &__icons{
             flex:0 0 100%;
+            margin-top:1vh;
             margin-bottom: 5vh;
             display: flex;
             justify-content: center;
@@ -30,6 +29,7 @@
             div{
             width:30px;
             height: fit-content;
+            margin:1em;
             svg{
                 width:100%;
                 height: auto;

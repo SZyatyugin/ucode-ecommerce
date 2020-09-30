@@ -8,7 +8,7 @@ let cartEvents=():void=>{
     }
     //---implement all events with cart---//
     get('.cart').addEventListener('click',implementCartEvent);
-
+    
     //---svg-cart onclick show cart---//
     get('.header-navigation__icons-cart').addEventListener('click',implementCartEvent);
     function implementCartEvent(e:any){

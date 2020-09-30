@@ -1,7 +1,7 @@
 import { storage } from "../store/store";
 import render from "../main";
 import { filterArray } from "../store/filter-store";
-import { EvalSourceMapDevToolPlugin } from "webpack";
+
 
 
 let filterImplementation = (): void => {
@@ -37,9 +37,9 @@ let filterImplementation = (): void => {
 
   function sortSelectionCheck(e: any): void {
     if (e.target.value.toLowerCase() === "highest price") {
-      storage.sortByHighestPrice();
-    } else if (e.target.value.toLowerCase() === "lowest price") {
       storage.sortByLowestPrice();
+    } else if (e.target.value.toLowerCase() === "lowest price") {
+      storage.sortByHighestPrice();
     }
     get(".selected-quantity").innerHTML = `${storage.store.length}`;
 
@@ -103,9 +103,6 @@ let filterImplementation = (): void => {
         filterArrayElement.filterStatus = false;
       }
     } else {
-
-      console.log('innerfilter')
-
       //--- clicked main filter(an object with features, contains innerFilter elements) ---//
       let clickedMainFilterElem: any = filterArray.find((filterElem: any) => {
         return filterElem.innerFilter.find((innerFilterElem: any) => {
@@ -130,27 +127,9 @@ let filterImplementation = (): void => {
               return elem
           })
         }).filter((elem) => { if (elem.length != 0) return elem });
-        //---an array of filtered products---//
-        let arrayOfClickedMainFilters: any = filterArray.filter((elem)=>{
-          if(elem.filterStatus)
-          return elem
-        });
-        let arrayOfProductsFiltered=arrayOfClickedInnerFilterElem.filter((elemFilter:any,index:number)=>{
-          
-          if(index==0){
 
-              return storage.store.filter((elem:any)=>{
-                if(elem.characters.includes(elemFilter.innerFilterName.toLowerCase())){
-                  return elem
-                }
-              })
-            }
-          })
-       
-        
+      //---first inner filter clicked---//
         if (arrayOfClickedInnerFilterElem.length == 1) {
-          console.log('one inner filter turned');
-          
           //--if only one filter turned on, takes storage as basis ---//
          storage.store.map((elem) => {
             elem.characters.map((charactersElem) => {
@@ -160,39 +139,31 @@ let filterImplementation = (): void => {
             })
           })
         } else {
-          console.log('several inner filters turned');
-          console.log(arrayOfProductsFiltered)
-        
+          //---second one and more filters clicked ---//
+        storage.store.map((elem:any)=>{
+        elem.show=false
+        })
            //--- an array of filtered products according to arrayOfClickedInnerFilterElem ---//
-      let arrayOfProductsToShow = arrayOfProductsFiltered.map((product: any) => {
-            
-        return arrayOfClickedInnerFilterElem.map((mainFilter: any) => {
-           return mainFilter.map((innerFilter:any)=>{
-             if (product.characters.includes(innerFilter.innerFilterName.toLowerCase())) {
-               console.log(product.characters.includes(innerFilter.innerFilterName.toLowerCase()));
-               console.log(product)
-               product.show=true
-             }else{
-              console.log(product.characters.includes(innerFilter.innerFilterName.toLowerCase()));
-              console.log(product)
-               product.show=false
-             }
-           }).find((elem:any)=>{if(elem!='undefined') return elem});
-         }).find((elem:any)=>{if(elem!='undefined') return elem});
-       }).filter((elem:any)=>{if(elem!='undefined') return elem}).map((elem:any)=>{
-        return elem
-       })
-       console.log(arrayOfClickedInnerFilterElem)
-       
-         console.log(arrayOfProductsToShow)
-         console.log(storage.store)
+           let arrayOfProductsToShow=storage.store.map((product:any)=>{
+          return  arrayOfClickedInnerFilterElem.map((innerfilter:any)=>{
+              return innerfilter.map((innerElem:any)=>{
+                if(product.characters.includes(innerElem.innerFilterName.toLowerCase())){
+                 return product
+                }
+              }).find((elem:any)=>{if(elem!='undefined'){return elem}})
+            }).filter((elem:any)=>{if(elem!='undefined'){return elem}})
+           }).filter((elem:any)=>{if(elem.length>1 &&elem.length==arrayOfClickedInnerFilterElem.length) return elem});
+           arrayOfProductsToShow.map((elem:any)=>{
+            elem.map((innerElem:any)=>{
+              innerElem.show=true
+            })
+          })
         }
       } else {
-        console.log('turn off filter');
-        
         //---click inner filter=false---//
         //---an array of filtered products---//
         clickedInnerFilterElem.innerFilterStatus = false;
+        
             //---an array of clicked inner filters ---//
             let arrayOfClickedInnerFilterElem: any = filterArray.map((elem) => {
               return elem.innerFilter.filter((elem) => {
@@ -200,43 +171,41 @@ let filterImplementation = (): void => {
                   return elem
               })
             }).filter((elem) => { if (elem.length != 0) return elem });
-        console.log(storage.store)
-        console.log(storage.store.filter((elem:any)=>{if(elem.show)return elem}))
+            
+        
         if (arrayOfClickedInnerFilterElem.length == 0) {
-          console.log('no filters turned on')
           //---all filters turned off---//
           storage.showAll=true
           storage.store.map((elem) => {
               elem.show = false
           })
         } else {
-          console.log('tunr off one by one');
           storage.store.map((elem)=>{
-            return elem.show=false
+            elem.show=false
           })
             //--- an array of clicked filter element ---//
-          let arrayOfProductsToShow = storage.store.map((product: any) => {
-            
-              return arrayOfClickedInnerFilterElem.map((mainFilter: any) => {
-                 return mainFilter.map((innerFilter:any)=>{
-                   if (product.characters.includes(innerFilter.innerFilterName.toLowerCase())) {
+            let arrayOfProductsToShow=storage.store.map((product:any)=>{
+              return  arrayOfClickedInnerFilterElem.map((innerfilter:any)=>{
+                  return innerfilter.map((innerElem:any)=>{
+                    if(product.characters.includes(innerElem.innerFilterName.toLowerCase())){
                      return product
-                   }
-                 }).find((elem:any)=>{if(elem!='undefined') return elem});
-               }).find((elem:any)=>{if(elem!='undefined') return elem});
-             }).filter((elem)=>{if(elem!='undefined') return elem}).map((elem)=>{
-               elem.show=true
-             })
+                    }
+                  }).find((elem:any)=>{if(elem!='undefined'){return elem}})
+                }).filter((elem:any)=>{if(elem!='undefined'){return elem}})
+               }).filter((elem:any)=>{if(elem.length==arrayOfClickedInnerFilterElem.length) return elem});
+               arrayOfProductsToShow.map((elem:any)=>{
+                elem.map((innerElem:any)=>{
+                  innerElem.show=true
+                })
+              })
              
-        console.log(storage.store)
-        console.log(storage.store.filter((elem:any)=>{if(elem.show)return elem}))
       }
       //---an array of filtered goods,according to inner filters---//
       let filteredElemOfStorage: any = storage.store.filter((elem) => {
         if (elem.show)
           return elem
       })
-      if (filteredElemOfStorage.length == 0) {
+      if (filteredElemOfStorage.length == 0 && arrayOfClickedInnerFilterElem.length==0) {
         storage.showAll = true
       }
     }
